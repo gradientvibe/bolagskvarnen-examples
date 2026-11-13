@@ -1,0 +1,3 @@
+[mcp_servers.bolagskvarnen]
+url = "https://app.bolagskvarnen.se/mcp"
+bearer_token_env_var = "BOLAGSKVARNEN_KEY"

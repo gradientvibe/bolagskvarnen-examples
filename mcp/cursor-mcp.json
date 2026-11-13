@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "bolagskvarnen": {
+      "url": "https://app.bolagskvarnen.se/mcp",
+      "headers": {
+        "Authorization": "Bearer ${env:BOLAGSKVARNEN_KEY}"
+      }
+    }
+  }
+}
