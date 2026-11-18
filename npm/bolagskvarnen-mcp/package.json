@@ -1,0 +1,38 @@
+{
+  "name": "bolagskvarnen-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for Swedish company data (Bolagsverket, SCB): connects stdio MCP clients to Bolagskvarnen's hosted server. Free test key with fictional companies.",
+  "mcpName": "se.bolagskvarnen/bolagskvarnen",
+  "type": "module",
+  "bin": {
+    "bolagskvarnen-mcp": "index.js"
+  },
+  "files": [
+    "index.js",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "sweden",
+    "swedish-company-data",
+    "bolagsverket",
+    "company-data",
+    "bolagsdata"
+  ],
+  "homepage": "https://bolagskvarnen.se/en/guides/mcp-server-swedish-company-data/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gradientvibe/bolagskvarnen-examples.git",
+    "directory": "npm/bolagskvarnen-mcp"
+  },
+  "author": "Bolagskvarnen (Bolagskällan AB) <support@bolagskvarnen.se>",
+  "license": "MIT"
+}
