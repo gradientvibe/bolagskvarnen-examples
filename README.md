@@ -1,6 +1,15 @@
-# Bolagskvarnen examples: MCP server and REST API for Swedish company data
+# Bolagskvarnen: remote MCP server for Swedish company data (Bolagsverket, SCB)
 
 [Svenska](README.sv.md) | English
+
+Hosted MCP server and REST API for Swedish company data: company search, board and signatories, history and financial statements, with source and retrieval time in every response. Connect Claude Code with one command and a free test key (sandbox with fictional companies):
+
+```bash
+claude mcp add --transport http bolagskvarnen https://app.bolagskvarnen.se/mcp \
+  --header "Authorization: Bearer $BOLAGSKVARNEN_KEY"
+```
+
+Server: `https://app.bolagskvarnen.se/mcp` (Streamable HTTP, OAuth 2.1 or API key). Official MCP Registry: `se.bolagskvarnen/bolagskvarnen`. Docs and client guides: [bolagskvarnen.se](https://bolagskvarnen.se/en/guides/mcp-server-swedish-company-data/).
 
 Code examples for **Bolagskvarnen** ([bolagskvarnen.se](https://bolagskvarnen.se)), an MCP server and REST API for Swedish company data: search companies, get the company profile, board and signatories, change history, financial statements and a person's other engagements. The data comes from Bolagsverket (the Swedish Companies Registration Office) and SCB (Statistics Sweden), and every response states its source and retrieval time in `meta.attribution`.
 
