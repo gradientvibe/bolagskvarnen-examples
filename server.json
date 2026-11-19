@@ -8,7 +8,7 @@
     "url": "https://github.com/gradientvibe/bolagskvarnen-examples",
     "source": "github"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "remotes": [
     {
       "type": "streamable-http",
@@ -18,6 +18,24 @@
           "name": "Authorization",
           "description": "Bearer gb_test_... (test key, fictional companies) or gb_live_.... Not needed when the client signs in with OAuth.",
           "isRequired": false,
+          "isSecret": true
+        }
+      ]
+    }
+  ],
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "bolagskvarnen-mcp",
+      "version": "1.0.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "BOLAGSKVARNEN_KEY",
+          "description": "API key: gb_test_... (free sandbox, fictional companies) or gb_live_...",
+          "isRequired": true,
           "isSecret": true
         }
       ]

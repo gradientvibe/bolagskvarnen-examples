@@ -9,7 +9,7 @@ claude mcp add --transport http bolagskvarnen https://app.bolagskvarnen.se/mcp \
   --header "Authorization: Bearer $BOLAGSKVARNEN_KEY"
 ```
 
-Server: `https://app.bolagskvarnen.se/mcp` (Streamable HTTP, OAuth 2.1 eller API-nyckel). Officiella MCP-registret: `se.bolagskvarnen/bolagskvarnen`. Guider per klient: [bolagskvarnen.se](https://bolagskvarnen.se/guider/mcp-server-for-bolagsdata/).
+Server: `https://app.bolagskvarnen.se/mcp` (Streamable HTTP, OAuth 2.1 eller API-nyckel). Officiella MCP-registret: `se.bolagskvarnen/bolagskvarnen`. För klienter som bara startar ett lokalt kommando finns npm-paketet [`bolagskvarnen-mcp`](https://www.npmjs.com/package/bolagskvarnen-mcp): `npx -y bolagskvarnen-mcp` med nyckeln i `BOLAGSKVARNEN_KEY`. Guider per klient: [bolagskvarnen.se](https://bolagskvarnen.se/guider/mcp-server-for-bolagsdata/).
 
 Kodexempel för **Bolagskvarnen** ([bolagskvarnen.se](https://bolagskvarnen.se)), en MCP-server och ett REST-API för svensk bolagsdata: sök bolag, hämta bolagsprofil, styrelse och firmateckning, historik, bokslut och en persons övriga uppdrag. Uppgifterna kommer från Bolagsverket och SCB, och varje svar anger källa och hämtningstid i `meta.attribution`.
 
