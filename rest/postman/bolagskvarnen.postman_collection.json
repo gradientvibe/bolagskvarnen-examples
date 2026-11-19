@@ -1,0 +1,341 @@
+{
+  "info": {
+    "name": "Bolagskvarnen API",
+    "description": "Calls for the Bolagskvarnen REST API, generated from https://app.bolagskvarnen.se/openapi.json by rest/postman/build.mjs. Set api_key to a test key (gb_test_...) to run the examples against the sandbox (fictional companies).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{api_key}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://app.bolagskvarnen.se/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "api_key",
+      "value": "",
+      "type": "secret",
+      "description": "Your test key (gb_test_...). Leave it empty here and set it in your own environment."
+    },
+    {
+      "key": "org_number",
+      "value": "569900-0013",
+      "type": "string"
+    },
+    {
+      "key": "person_ref",
+      "value": "",
+      "type": "string",
+      "description": "Filled in by the roles request. Run Get roles first."
+    }
+  ],
+  "item": [
+    {
+      "name": "Bolag",
+      "description": "Sök och slå upp bolag.",
+      "item": [
+        {
+          "name": "Sök bolag (GET /companies/search)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "",
+                "disabled": true,
+                "description": "Valfri, högst 100 tecken. Görs exakt samma anrop om med samma nyckel efter ett lyckat svar debiteras det inte igen. Samma nyckel för ett annat anrop ger 422 idempotency_key_reused."
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/companies/search?q=Exempelbolaget",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "companies",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "Exempelbolaget",
+                  "disabled": false
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "disabled": true
+                },
+                {
+                  "key": "only_active",
+                  "value": "false",
+                  "disabled": true
+                }
+              ],
+              "variable": []
+            },
+            "description": "Sök på namn (minst fyra tecken) eller organisationsnummer. Högst 10 träffar. Enskilda firmor hittas bara på exakt nummer.\n\nPris: gratis per uppslag (live). Scope: `companies:read`."
+          }
+        },
+        {
+          "name": "Hämta bolag (GET /companies/{org_number})",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "",
+                "disabled": true,
+                "description": "Valfri, högst 100 tecken. Görs exakt samma anrop om med samma nyckel efter ett lyckat svar debiteras det inte igen. Samma nyckel för ett annat anrop ger 422 idempotency_key_reused."
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/companies/{{org_number}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "companies",
+                "{{org_number}}"
+              ],
+              "query": [
+                {
+                  "key": "detail",
+                  "value": "concise",
+                  "disabled": true
+                }
+              ],
+              "variable": []
+            },
+            "description": "Bolagsprofil. Med `detail=full` även adresser, verksamhet, tidigare namn, aktiekapital och skatteregistrering (operation `get_company_full`, 0,15 kr).\n\nPris: 0,10 kr per uppslag (live). Scope: `companies:read`."
+          }
+        },
+        {
+          "name": "Hämta roller (GET /companies/{org_number}/roles)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "",
+                "disabled": true,
+                "description": "Valfri, högst 100 tecken. Görs exakt samma anrop om med samma nyckel efter ett lyckat svar debiteras det inte igen. Samma nyckel för ett annat anrop ger 422 idempotency_key_reused."
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/companies/{{org_number}}/roles",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "companies",
+                "{{org_number}}",
+                "roles"
+              ],
+              "query": [
+                {
+                  "key": "include_former",
+                  "value": "false",
+                  "disabled": true,
+                  "description": "Ta med avgångna funktionärer och avslutade engagemang."
+                }
+              ],
+              "variable": []
+            },
+            "description": "Styrelse, VD, revisorer och firmateckning. Personer får en person_ref i stället för personnummer.\n\nPris: 0,10 kr per uppslag (live). Scope: `roles:read`."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "const hit = ((body.data || {}).roles || []).find((r) => r.person_ref);",
+                  "if (hit) { pm.collectionVariables.set('person_ref', hit.person_ref); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Hämta historik (GET /companies/{org_number}/history)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "",
+                "disabled": true,
+                "description": "Valfri, högst 100 tecken. Görs exakt samma anrop om med samma nyckel efter ett lyckat svar debiteras det inte igen. Samma nyckel för ett annat anrop ger 422 idempotency_key_reused."
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/companies/{{org_number}}/history",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "companies",
+                "{{org_number}}",
+                "history"
+              ],
+              "query": [
+                {
+                  "key": "since",
+                  "value": "2026-01-01",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "50",
+                  "disabled": true
+                }
+              ],
+              "variable": []
+            },
+            "description": "Registrerade ändringar och statushistorik.\n\nPris: 0,10 kr per uppslag (live). Scope: `history:read`."
+          }
+        },
+        {
+          "name": "Hämta bokslut (GET /companies/{org_number}/financials)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "",
+                "disabled": true,
+                "description": "Valfri, högst 100 tecken. Görs exakt samma anrop om med samma nyckel efter ett lyckat svar debiteras det inte igen. Samma nyckel för ett annat anrop ger 422 idempotency_key_reused."
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/companies/{{org_number}}/financials",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "companies",
+                "{{org_number}}",
+                "financials"
+              ],
+              "query": [
+                {
+                  "key": "years",
+                  "value": "5",
+                  "disabled": true
+                }
+              ],
+              "variable": []
+            },
+            "description": "Bokslut och nyckeltal för aktiebolag, senaste 1–5 åren. För andra bolagsformer är täckningen `restricted`.\n\nPris: 0,10 kr per uppslag (live). Scope: `financials:read`."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Personer",
+      "description": "Engagemang för en person via person_ref.",
+      "item": [
+        {
+          "name": "Hämta engagemang (GET /persons/{person_ref}/engagements)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "",
+                "disabled": true,
+                "description": "Valfri, högst 100 tecken. Görs exakt samma anrop om med samma nyckel efter ett lyckat svar debiteras det inte igen. Samma nyckel för ett annat anrop ger 422 idempotency_key_reused."
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/persons/{{person_ref}}/engagements",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "persons",
+                "{{person_ref}}",
+                "engagements"
+              ],
+              "query": [
+                {
+                  "key": "include_former",
+                  "value": "false",
+                  "disabled": true,
+                  "description": "Ta med avgångna funktionärer och avslutade engagemang."
+                }
+              ],
+              "variable": []
+            },
+            "description": "Personens roller i bolag. person_ref hämtas från ett rollsvar och fungerar bara för ditt konto. Enskilda firmors nummer visas inte.\n\nPris: 0,10 kr per uppslag (live). Scope: `persons:read`."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Konto",
+      "description": "Kontot och nyckeln. Gratis.",
+      "item": [
+        {
+          "name": "Hämta konto (GET /account)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/account",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "account"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "Konto, saldo, månadens förbrukning och nyckelns miljö och scopes. Gratis och mäts inte."
+          }
+        }
+      ]
+    }
+  ]
+}

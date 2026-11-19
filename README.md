@@ -18,7 +18,7 @@ This is the vendor's own repository. Bolagskvarnen is a brand of Bolagskällan A
 ## Status, in plain words
 
 - **The sandbox is open.** A free test key (`gb_test_...`) gives real, working responses about **fictional companies**. Nothing in this repository is a real company or a real person.
-- **Real data opens soon.** Until then, live keys and OAuth sign-in answer `503 blocked_by_phase`. That is why the examples below use a test key.
+- **Real data opens soon.** Until then, live keys answer `503 blocked_by_phase`, while OAuth sign-in and test keys answer from the sandbox. The examples below use a test key.
 - The service is for internal use by Swedish companies, organisations and agencies. The data may not be resold or shown to your own customers. See the [terms](https://bolagskvarnen.se/villkor/).
 
 ## 1. Get a test key
@@ -33,18 +33,18 @@ The sandbox has seven fictional companies in the same format as live data. `5699
 
 ## 2. Connect the MCP server
 
-Server address: `https://app.bolagskvarnen.se/mcp` (Streamable HTTP). Six read-only tools: `gb_search_companies`, `gb_get_company`, `gb_get_company_roles`, `gb_get_company_history`, `gb_get_financials`, `gb_get_person_engagements`.
+Server address: `https://app.bolagskvarnen.se/mcp` (Streamable HTTP). Seven read-only tools: `gb_search_companies`, `gb_get_company`, `gb_get_company_roles`, `gb_get_company_history`, `gb_get_financials`, `gb_get_person_engagements`, `gb_get_account`.
 
 What works today, by client (checked 2026-11-13):
 
 | Client | Test key (sandbox, works now) | OAuth sign-in |
 |---|---|---|
-| Claude Code | Yes | Answers when live data opens |
-| Cursor | Yes | Answers when live data opens |
-| VS Code with Copilot | Yes | Answers when live data opens |
-| Codex | Yes | Answers when live data opens |
-| claude.ai and Claude Desktop | Only with the beta feature Request headers | Answers when live data opens |
-| ChatGPT | No | Answers when live data opens |
+| Claude Code | Yes | Sandbox until live data opens |
+| Cursor | Yes | Sandbox until live data opens |
+| VS Code with Copilot | Yes | Sandbox until live data opens |
+| Codex | Yes | Sandbox until live data opens |
+| claude.ai and Claude Desktop | Only with the beta feature Request headers | Sandbox until live data opens |
+| ChatGPT | No | Sandbox until live data opens |
 
 ### Claude Code
 
@@ -57,7 +57,7 @@ Then type `/mcp` in Claude Code. The shell expands the variable, so the key is s
 
 ### Claude Desktop and claude.ai
 
-Customize, Connectors, Add custom connector. Name `Bolagskvarnen`, address `https://app.bolagskvarnen.se/mcp`. Sign-in is OAuth, so answers arrive when live data opens. See the [guide for Claude](https://bolagskvarnen.se/en/guides/mcp-server-swedish-company-data/) for the Request headers exception.
+Customize, Connectors, Add custom connector. Name `Bolagskvarnen`, address `https://app.bolagskvarnen.se/mcp`. Sign-in is OAuth and answers from the sandbox until live data opens for your account. See the [guide for Claude](https://bolagskvarnen.se/en/guides/mcp-server-swedish-company-data/) for the Request headers exception.
 
 ### Cursor
 
@@ -167,6 +167,21 @@ python rest/python/lookup.py 569900-0013
 ```bash
 npx tsx rest/typescript/lookup.ts 569900-0013
 ```
+
+### PHP and Go
+
+These two search for a company by name (default `Exempelbolaget`) and print the board and signatory rights of the first hit. The key is read from `BOLAGSKVARNEN_KEY`.
+
+```bash
+php rest/php/lookup.php Exempelbolaget               # PHP 8 with the curl extension
+cd rest/go && go run . Exempelbolaget                # Go 1.21 or later
+```
+
+Code: [`rest/php/lookup.php`](rest/php/lookup.php), [`rest/go/main.go`](rest/go/main.go).
+
+### Postman
+
+[`rest/postman/bolagskvarnen.postman_collection.json`](rest/postman/bolagskvarnen.postman_collection.json) has one folder per tag in the [OpenAPI file](https://app.bolagskvarnen.se/openapi.json) and ready sandbox calls. Import it in Postman and set the collection variable `api_key` to your test key (`base_url` is already set). Run *Get roles* before *Get engagements*: it stores the `person_ref` that the engagements call needs. Rebuild the collection with `node rest/postman/build.mjs` (Node 20 or later).
 
 ## Endpoints
 
