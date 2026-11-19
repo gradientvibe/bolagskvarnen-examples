@@ -168,6 +168,22 @@ python rest/python/lookup.py 569900-0013
 npx tsx rest/typescript/lookup.ts 569900-0013
 ```
 
+### C#, PHP and Go
+
+These three search for a company by name (default `Exempelbolaget`) and print the board and signatory rights of the first hit. The key is read from `BOLAGSKVARNEN_KEY`.
+
+```bash
+dotnet run --project rest/csharp -- Exempelbolaget   # .NET 8 or later
+php rest/php/lookup.php Exempelbolaget               # PHP 8 with the curl extension
+cd rest/go && go run . Exempelbolaget                # Go 1.21 or later
+```
+
+Code: [`rest/csharp/Program.cs`](rest/csharp/Program.cs), [`rest/php/lookup.php`](rest/php/lookup.php), [`rest/go/main.go`](rest/go/main.go).
+
+### Postman
+
+[`rest/postman/bolagskvarnen.postman_collection.json`](rest/postman/bolagskvarnen.postman_collection.json) has one folder per tag in the [OpenAPI file](https://app.bolagskvarnen.se/openapi.json) and ready sandbox calls. Import it in Postman and set the collection variable `api_key` to your test key (`base_url` is already set). Run *Get roles* before *Get engagements*: it stores the `person_ref` that the engagements call needs. Rebuild the collection with `node rest/postman/build.mjs` (Node 20 or later).
+
 ## Endpoints
 
 | Call | Path |

@@ -140,6 +140,22 @@ python rest/python/lookup.py 569900-0013
 npx tsx rest/typescript/lookup.ts 569900-0013
 ```
 
+### C#, PHP och Go
+
+De här tre söker ett bolag på namn (standard `Exempelbolaget`) och skriver ut styrelse och firmateckning för första träffen. Nyckeln läses ur `BOLAGSKVARNEN_KEY`.
+
+```bash
+dotnet run --project rest/csharp -- Exempelbolaget   # .NET 8 eller senare
+php rest/php/lookup.php Exempelbolaget               # PHP 8 med curl-tillägget
+cd rest/go && go run . Exempelbolaget                # Go 1.21 eller senare
+```
+
+Kod: [`rest/csharp/Program.cs`](rest/csharp/Program.cs), [`rest/php/lookup.php`](rest/php/lookup.php), [`rest/go/main.go`](rest/go/main.go).
+
+### Postman
+
+[`rest/postman/bolagskvarnen.postman_collection.json`](rest/postman/bolagskvarnen.postman_collection.json) har en mapp per tagg i [OpenAPI-filen](https://app.bolagskvarnen.se/openapi.json) och färdiga anrop mot sandlådan. Importera den i Postman och sätt samlingsvariabeln `api_key` till din testnyckel (`base_url` är redan satt). Kör *Hämta roller* före *Hämta engagemang*: det anropet sparar den `person_ref` som engagemangsanropet behöver. Bygg om samlingen med `node rest/postman/build.mjs` (Node 20 eller senare).
+
 ## Anrop
 
 | Anrop | Sökväg |
