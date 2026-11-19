@@ -140,17 +140,16 @@ python rest/python/lookup.py 569900-0013
 npx tsx rest/typescript/lookup.ts 569900-0013
 ```
 
-### C#, PHP och Go
+### PHP och Go
 
-De här tre söker ett bolag på namn (standard `Exempelbolaget`) och skriver ut styrelse och firmateckning för första träffen. Nyckeln läses ur `BOLAGSKVARNEN_KEY`.
+De här två söker ett bolag på namn (standard `Exempelbolaget`) och skriver ut styrelse och firmateckning för första träffen. Nyckeln läses ur `BOLAGSKVARNEN_KEY`.
 
 ```bash
-dotnet run --project rest/csharp -- Exempelbolaget   # .NET 8 eller senare
 php rest/php/lookup.php Exempelbolaget               # PHP 8 med curl-tillägget
 cd rest/go && go run . Exempelbolaget                # Go 1.21 eller senare
 ```
 
-Kod: [`rest/csharp/Program.cs`](rest/csharp/Program.cs), [`rest/php/lookup.php`](rest/php/lookup.php), [`rest/go/main.go`](rest/go/main.go).
+Kod: [`rest/php/lookup.php`](rest/php/lookup.php), [`rest/go/main.go`](rest/go/main.go).
 
 ### Postman
 
