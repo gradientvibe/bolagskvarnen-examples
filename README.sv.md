@@ -140,6 +140,16 @@ python rest/python/lookup.py 569900-0013
 npx tsx rest/typescript/lookup.ts 569900-0013
 ```
 
+### C#
+
+Söker ett bolag på namn (standard `Exempelbolaget`) och skriver ut styrelse och firmateckning för första träffen. Nyckeln läses ur `BOLAGSKVARNEN_KEY`.
+
+```bash
+dotnet run --project rest/csharp -- Exempelbolaget   # .NET 8 eller senare
+```
+
+Kod: [`rest/csharp/Program.cs`](rest/csharp/Program.cs). Inte kompilerad eller körd ännu.
+
 ## Anrop
 
 | Anrop | Sökväg |
