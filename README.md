@@ -168,6 +168,16 @@ python rest/python/lookup.py 569900-0013
 npx tsx rest/typescript/lookup.ts 569900-0013
 ```
 
+### C#
+
+Searches for a company by name (default `Exempelbolaget`) and prints the board and signatory rights of the first hit. The key is read from `BOLAGSKVARNEN_KEY`.
+
+```bash
+dotnet run --project rest/csharp -- Exempelbolaget   # .NET 8 or later
+```
+
+Code: [`rest/csharp/Program.cs`](rest/csharp/Program.cs). Not compiled or run yet.
+
 ## Endpoints
 
 | Call | Path |
