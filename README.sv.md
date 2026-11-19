@@ -18,7 +18,7 @@ Det här är leverantörens eget repo. Bolagskvarnen är ett varumärke i Bolags
 ## Läget, rakt på sak
 
 - **Sandlådan är öppen.** En gratis testnyckel (`gb_test_...`) ger riktiga, fungerande svar om **påhittade bolag**. Inget i det här repot är ett riktigt bolag eller en riktig person.
-- **Riktig data öppnar snart.** Tills dess svarar live-nycklar och OAuth-inloggning `503 blocked_by_phase`. Därför använder exemplen nedan en testnyckel.
+- **Riktig data öppnar snart.** Tills dess svarar live-nycklar `503 blocked_by_phase`, medan OAuth-inloggning och testnycklar svarar från sandlådan. Exemplen nedan använder en testnyckel.
 - Tjänsten är till för internt bruk i svenska företag, organisationer och myndigheter. Uppgifterna får inte säljas vidare eller visas för dina egna kunder. Se [villkoren](https://bolagskvarnen.se/villkor/).
 
 ## 1. Skaffa en testnyckel
@@ -33,18 +33,18 @@ Sandlådan har sju påhittade bolag i samma format som live-data. `569900-0013` 
 
 ## 2. Anslut MCP-servern
 
-Serverns adress: `https://app.bolagskvarnen.se/mcp` (Streamable HTTP). Sex verktyg som bara läser: `gb_search_companies`, `gb_get_company`, `gb_get_company_roles`, `gb_get_company_history`, `gb_get_financials`, `gb_get_person_engagements`.
+Serverns adress: `https://app.bolagskvarnen.se/mcp` (Streamable HTTP). Sju verktyg som bara läser: `gb_search_companies`, `gb_get_company`, `gb_get_company_roles`, `gb_get_company_history`, `gb_get_financials`, `gb_get_person_engagements`, `gb_get_account`.
 
 Vad som fungerar i dag, per klient (kontrollerat 2026-11-13):
 
 | Klient | Testnyckel (sandlådan, fungerar nu) | OAuth-inloggning |
 |---|---|---|
-| Claude Code | Ja | Svarar när live-data öppnar |
-| Cursor | Ja | Svarar när live-data öppnar |
-| VS Code med Copilot | Ja | Svarar när live-data öppnar |
-| Codex | Ja | Svarar när live-data öppnar |
-| claude.ai och Claude Desktop | Bara med betafunktionen Request headers | Svarar när live-data öppnar |
-| ChatGPT | Nej | Svarar när live-data öppnar |
+| Claude Code | Ja | Sandlådan tills live-data öppnar |
+| Cursor | Ja | Sandlådan tills live-data öppnar |
+| VS Code med Copilot | Ja | Sandlådan tills live-data öppnar |
+| Codex | Ja | Sandlådan tills live-data öppnar |
+| claude.ai och Claude Desktop | Bara med betafunktionen Request headers | Sandlådan tills live-data öppnar |
+| ChatGPT | Nej | Sandlådan tills live-data öppnar |
 
 ### Claude Code
 
@@ -57,7 +57,7 @@ Skriv sedan `/mcp` i Claude Code. Skalet byter ut variabeln, så nyckeln sparas 
 
 ### Claude Desktop och claude.ai
 
-Customize, Connectors, Add custom connector. Namn `Bolagskvarnen`, adress `https://app.bolagskvarnen.se/mcp`. Inloggningen är OAuth, så svaren kommer när live-data öppnar. Se [guiden för Claude](https://bolagskvarnen.se/guider/bolagsdata-i-claude/) för undantaget med Request headers.
+Customize, Connectors, Add custom connector. Namn `Bolagskvarnen`, adress `https://app.bolagskvarnen.se/mcp`. Inloggningen är OAuth och svarar från sandlådan tills live-data öppnar för ditt konto. Se [guiden för Claude](https://bolagskvarnen.se/guider/bolagsdata-i-claude/) för undantaget med Request headers.
 
 ### Cursor
 
