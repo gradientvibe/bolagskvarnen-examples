@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "bolagskvarnen": {
+      "type": "http",
+      "url": "https://app.bolagskvarnen.se/mcp"
+    }
+  }
+}
