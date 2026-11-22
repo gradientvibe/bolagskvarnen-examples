@@ -1,0 +1,57 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "bolagskvarnen",
+  "version": "1.0.0",
+  "description": "Swedish company data for AI agents: search companies, board and signatory rights, change history and annual accounts. Free sandbox with fictional companies.",
+  "author": {
+    "name": "Bolagskällan AB",
+    "email": "support@bolagskvarnen.se",
+    "url": "https://bolagskvarnen.se"
+  },
+  "homepage": "https://bolagskvarnen.se",
+  "repository": "https://github.com/gradientvibe/bolagskvarnen-examples",
+  "keywords": ["sweden", "company data", "business", "board", "financials"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Bolagskvarnen",
+        "shortDescription": "Swedish company data",
+        "longDescription": "Bolagskvarnen gives you structured data on Swedish companies. Search by name or organisation number, then get the company profile, board and signatory rights, change history, annual accounts with key figures, and a person's other engagements. Every answer states its source and retrieval time. Sign up for a free test key and try it against a sandbox of fictional companies. Data originates from Bolagsverket and SCB. For internal use by Swedish companies, organisations and authorities. Read-only: nothing is written or changed. Personal identity numbers are never returned; people are identified by an opaque person reference.",
+        "developerName": "Bolagskällan AB",
+        "category": "Productivity",
+        "capabilities": ["Search companies", "Read company profile", "Read board and signatory rights", "Read annual accounts"],
+        "websiteURL": "https://bolagskvarnen.se",
+        "supportURL": "https://bolagskvarnen.se/kontakt/",
+        "privacyPolicyURL": "https://bolagskvarnen.se/integritet/",
+        "termsOfServiceURL": "https://bolagskvarnen.se/villkor/",
+        "defaultPrompt": [
+          "Search for the Swedish company Exempelbolaget.",
+          "Who is on the board of the company with org number 569900-0013?",
+          "Show the latest annual accounts for Exempelbolaget."
+        ],
+        "brandColor": "#031417",
+        "brandColorDark": "#9FE3C8",
+        "composerIcon": "./assets/icon.png",
+        "logo": "./assets/logo.png"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {"description": "Search a company by name", "prompt": "Search for the Swedish company Exempelbolaget.", "tools_triggered": "gb_search_companies", "expected_behavior": "Returns a list of matches with organisation number and name, stating the source."},
+            {"description": "Get a company profile", "prompt": "Get the company profile for organisation number 569900-0013.", "tools_triggered": "gb_get_company", "expected_behavior": "Returns name, legal form, address, industry code and registration date with source and retrieval time."},
+            {"description": "Board and signatory rights", "prompt": "Who is on the board of 569900-0013 and who can sign for the company?", "tools_triggered": "gb_get_company_roles", "expected_behavior": "Lists roles with names and start dates plus signatory rights text, without personal identity numbers."},
+            {"description": "Annual accounts", "prompt": "Show the latest annual accounts and key figures for 569900-0013.", "tools_triggered": "gb_get_financials", "expected_behavior": "Returns the accounts and key figures for the available years with source."},
+            {"description": "Change history", "prompt": "What changes have been registered for 569900-0013 over time?", "tools_triggered": "gb_get_company_history", "expected_behavior": "Returns the registered changes with dates."}
+          ],
+          "negative": [
+            {"description": "Personal identity number lookup", "prompt": "Give me the personal identity number of the CEO of 569900-0013."},
+            {"description": "Unsupported country", "prompt": "Look up a company registered in Norway."},
+            {"description": "Credit rating", "prompt": "Give me a credit rating and credit decision for this company."}
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "The plugin does not sell products or process payments in ChatGPT. Customers top up a usage balance on bolagskvarnen.se."
+      }
+    }
+  }
+}
